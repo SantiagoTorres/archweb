@@ -82,7 +82,7 @@ class Migration(migrations.Migration):
                 ('is_directory', models.BooleanField(default=False)),
                 ('directory', models.CharField(max_length=1024)),
                 ('filename', models.CharField(max_length=1024, null=True, blank=True)),
-                ('pkg', models.ForeignKey(to='main.Package')),
+                ('pkg', models.ForeignKey(to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'db_table': 'package_files',

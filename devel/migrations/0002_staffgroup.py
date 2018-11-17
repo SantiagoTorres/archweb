@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('sort_order', models.PositiveIntegerField()),
                 ('member_title', models.CharField(max_length=100)),
                 ('description', models.TextField(blank=True)),
-                ('group', models.OneToOneField(to='auth.Group')),
+                ('group', models.OneToOneField(to='auth.Group', on_delete=models.CASCADE)),
             ],
             options={
                 'ordering': ('sort_order',),

@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, db_index=True)),
                 ('version', models.CharField(default=b'', max_length=255)),
                 ('comparison', models.CharField(default=b'', max_length=255)),
-                ('pkg', models.ForeignKey(related_name=b'conflicts', to='main.Package')),
+                ('pkg', models.ForeignKey(related_name=b'conflicts', to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('name',),
@@ -38,7 +38,7 @@ class Migration(migrations.Migration):
                 ('comparison', models.CharField(default=b'', max_length=255)),
                 ('description', models.TextField(null=True, blank=True)),
                 ('deptype', models.CharField(default=b'D', max_length=1, choices=[(b'D', b'Depend'), (b'O', b'Optional Depend'), (b'M', b'Make Depend'), (b'C', b'Check Depend')])),
-                ('pkg', models.ForeignKey(related_name=b'depends', to='main.Package')),
+                ('pkg', models.ForeignKey(related_name=b'depends', to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('name',),
@@ -61,8 +61,8 @@ class Migration(migrations.Migration):
                 ('message', models.TextField(verbose_name=b'message to developer', blank=True)),
                 ('is_spam', models.BooleanField(default=False, help_text=b'Is this comment from a real person?')),
                 ('is_legitimate', models.BooleanField(default=True, help_text=b'Is this actually an out-of-date flag request?')),
-                ('repo', models.ForeignKey(to='main.Repo')),
-                ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True)),
+                ('repo', models.ForeignKey(to='main.Repo', on_delete=django.db.models.CASCADE)),
+                ('user', models.ForeignKey(blank=True, to=settings.AUTH_USER_MODEL, null=True, on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'get_latest_by': 'created',
@@ -74,7 +74,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255)),
-                ('pkg', models.ForeignKey(related_name=b'licenses', to='main.Package')),
+                ('pkg', models.ForeignKey(related_name=b'licenses', to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('name',),
@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, db_index=True)),
-                ('pkg', models.ForeignKey(related_name=b'groups', to='main.Package')),
+                ('pkg', models.ForeignKey(related_name=b'groups', to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('name',),
@@ -100,7 +100,7 @@ class Migration(migrations.Migration):
                 ('pkgbase', models.CharField(max_length=255)),
                 ('type', models.PositiveIntegerField(default=1, choices=[(1, b'Maintainer'), (2, b'Watcher')])),
                 ('created', models.DateTimeField(editable=False)),
-                ('user', models.ForeignKey(related_name=b'package_relations', to=settings.AUTH_USER_MODEL)),
+                ('user', models.ForeignKey(related_name=b'package_relations', to=settings.AUTH_USER_MODEL, on_delete=django.db.models.CASCADE)),
             ],
             options={
             },
@@ -112,7 +112,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('name', models.CharField(max_length=255, db_index=True)),
                 ('version', models.CharField(default=b'', max_length=255)),
-                ('pkg', models.ForeignKey(related_name=b'provides', to='main.Package')),
+                ('pkg', models.ForeignKey(related_name=b'provides', to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('name',),
@@ -127,7 +127,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, db_index=True)),
                 ('version', models.CharField(default=b'', max_length=255)),
                 ('comparison', models.CharField(default=b'', max_length=255)),
-                ('pkg', models.ForeignKey(related_name=b'replaces', to='main.Package')),
+                ('pkg', models.ForeignKey(related_name=b'replaces', to='main.Package', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('name',),
@@ -146,9 +146,9 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField(editable=False, db_index=True)),
                 ('revoked', models.DateTimeField(null=True)),
                 ('comments', models.TextField(null=True, blank=True)),
-                ('arch', models.ForeignKey(to='main.Arch')),
-                ('repo', models.ForeignKey(to='main.Repo')),
-                ('user', models.ForeignKey(related_name=b'package_signoffs', to=settings.AUTH_USER_MODEL)),
+                ('arch', models.ForeignKey(to='main.Arch', on_delete=django.db.models.CASCADE)),
+                ('repo', models.ForeignKey(to='main.Repo', on_delete=django.db.models.CASCADE)),
+                ('user', models.ForeignKey(related_name=b'package_signoffs', to=settings.AUTH_USER_MODEL, on_delete=django.db.models.CASCADE)),
             ],
             options={
             },
@@ -167,9 +167,9 @@ class Migration(migrations.Migration):
                 ('enabled', models.BooleanField(default=True, help_text=b'Is this package eligible for signoffs?')),
                 ('known_bad', models.BooleanField(default=False, help_text=b'Is package is known to be broken in some way?')),
                 ('comments', models.TextField(null=True, blank=True)),
-                ('arch', models.ForeignKey(to='main.Arch')),
-                ('repo', models.ForeignKey(to='main.Repo')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True)),
+                ('arch', models.ForeignKey(to='main.Arch', on_delete=django.db.models.CASCADE)),
+                ('repo', models.ForeignKey(to='main.Repo', on_delete=django.db.models.CASCADE)),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True, on_delete=django.db.models.CASCADE)),
             ],
             options={
             },
@@ -189,9 +189,9 @@ class Migration(migrations.Migration):
                 ('new_pkgver', models.CharField(max_length=255, null=True)),
                 ('new_pkgrel', models.CharField(max_length=255, null=True)),
                 ('new_epoch', models.PositiveIntegerField(null=True)),
-                ('arch', models.ForeignKey(related_name=b'updates', to='main.Arch')),
+                ('arch', models.ForeignKey(related_name=b'updates', to='main.Arch', on_delete=django.db.models.CASCADE)),
                 ('package', models.ForeignKey(related_name=b'updates', on_delete=django.db.models.deletion.SET_NULL, to='main.Package', null=True)),
-                ('repo', models.ForeignKey(related_name=b'updates', to='main.Repo')),
+                ('repo', models.ForeignKey(related_name=b'updates', to='main.Repo', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'get_latest_by': 'created',

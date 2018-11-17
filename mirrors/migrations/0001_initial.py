@@ -60,7 +60,7 @@ class Migration(migrations.Migration):
                 ('duration', models.FloatField(null=True)),
                 ('is_success', models.BooleanField(default=True)),
                 ('error', models.TextField(default=b'', blank=True)),
-                ('location', models.ForeignKey(related_name=b'logs', to='mirrors.CheckLocation', null=True)),
+                ('location', models.ForeignKey(related_name=b'logs', to='mirrors.CheckLocation', on_delete=django.db.models.CASCADE, null=True)),
             ],
             options={
                 'get_latest_by': 'check_time',
@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('ip', mirrors.fields.IPNetworkField(max_length=44, verbose_name=b'IP')),
                 ('created', models.DateTimeField(editable=False)),
-                ('mirror', models.ForeignKey(related_name=b'rsync_ips', to='mirrors.Mirror')),
+                ('mirror', models.ForeignKey(related_name=b'rsync_ips', to='mirrors.Mirror', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('ip',),
@@ -106,7 +106,7 @@ class Migration(migrations.Migration):
                 ('has_ipv6', models.BooleanField(default=False, verbose_name=b'IPv6 capable', editable=False)),
                 ('created', models.DateTimeField(editable=False)),
                 ('active', models.BooleanField(default=True)),
-                ('mirror', models.ForeignKey(related_name=b'urls', to='mirrors.Mirror')),
+                ('mirror', models.ForeignKey(related_name=b'urls', to='mirrors.Mirror', on_delete=django.db.models.CASCADE)),
                 ('protocol', models.ForeignKey(related_name=b'urls', on_delete=django.db.models.deletion.PROTECT, editable=False, to='mirrors.MirrorProtocol')),
             ],
             options={
@@ -117,7 +117,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='mirrorlog',
             name='url',
-            field=models.ForeignKey(related_name=b'logs', to='mirrors.MirrorUrl'),
+            field=models.ForeignKey(related_name=b'logs', to='mirrors.MirrorUrl', on_delete=django.db.models.CASCADE),
             preserve_default=True,
         ),
     ]

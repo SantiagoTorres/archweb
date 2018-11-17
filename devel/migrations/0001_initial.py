@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('created', models.DateTimeField()),
                 ('expires', models.DateTimeField(null=True, blank=True)),
                 ('revoked', models.DateTimeField(null=True, blank=True)),
-                ('owner', models.ForeignKey(related_name=b'all_keys', to=settings.AUTH_USER_MODEL, help_text=b'The developer this key belongs to', null=True)),
+                ('owner', models.ForeignKey(related_name=b'all_keys', to=settings.AUTH_USER_MODEL, help_text=b'The developer this key belongs to', null=True, on_delete=django.db.models.CASCADE)),
                 ('parent', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='devel.DeveloperKey', null=True)),
             ],
             options={
@@ -39,8 +39,8 @@ class Migration(migrations.Migration):
                 ('pgp_key', devel.fields.PGPKeyField(help_text=b'consists of 40 hex digits; use `gpg --fingerprint`', max_length=40, verbose_name=b'PGP key fingerprint')),
                 ('created', models.DateField()),
                 ('revoked', models.DateField(null=True, blank=True)),
-                ('owner', models.ForeignKey(related_name=b'masterkey_owner', to=settings.AUTH_USER_MODEL, help_text=b'The developer holding this master key')),
-                ('revoker', models.ForeignKey(related_name=b'masterkey_revoker', to=settings.AUTH_USER_MODEL, help_text=b'The developer holding the revocation certificate')),
+                ('owner', models.ForeignKey(related_name=b'masterkey_owner', to=settings.AUTH_USER_MODEL, help_text=b'The developer holding this master key', on_delete=django.db.models.CASCADE)),
+                ('revoker', models.ForeignKey(related_name=b'masterkey_revoker', to=settings.AUTH_USER_MODEL, help_text=b'The developer holding the revocation certificate', on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'ordering': ('created',),
@@ -88,7 +88,7 @@ class Migration(migrations.Migration):
                 ('latin_name', models.CharField(help_text=b'Latin-form name; used only for non-Latin full names', max_length=255, null=True, blank=True)),
                 ('last_modified', models.DateTimeField(editable=False)),
                 ('allowed_repos', models.ManyToManyField(to='main.Repo', blank=True)),
-                ('user', models.OneToOneField(related_name=b'userprofile', to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(related_name=b'userprofile', to=settings.AUTH_USER_MODEL, on_delete=django.db.models.CASCADE)),
             ],
             options={
                 'get_latest_by': 'last_modified',

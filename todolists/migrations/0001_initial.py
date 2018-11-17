@@ -43,10 +43,10 @@ class Migration(migrations.Migration):
                 ('removed', models.DateTimeField(null=True, blank=True)),
                 ('status', models.SmallIntegerField(default=0, choices=[(0, b'Incomplete'), (1, b'Complete'), (2, b'In-progress')])),
                 ('comments', models.TextField(null=True, blank=True)),
-                ('arch', models.ForeignKey(to='main.Arch')),
+                ('arch', models.ForeignKey(to='main.Arch', on_delete=django.db.models.CASCADE)),
                 ('pkg', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='main.Package', null=True)),
-                ('repo', models.ForeignKey(to='main.Repo')),
-                ('todolist', models.ForeignKey(to='todolists.Todolist')),
+                ('repo', models.ForeignKey(to='main.Repo', on_delete=django.db.models.CASCADE)),
+                ('todolist', models.ForeignKey(to='todolists.Todolist', on_delete=django.db.models.CASCADE)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL, null=True)),
             ],
             options={
